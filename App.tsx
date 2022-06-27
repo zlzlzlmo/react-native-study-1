@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -13,15 +14,33 @@ import {
 // 안드로이드에는 적용이 안되기 때문에 Platform과 StatusBar.currentHeight를 사용하여 paddingTop적용
 
 export default function App() {
+  const [enteredGoalText, setEnteredGoalText] = useState<string>("");
+  const [goals, setGoals] = useState<string[]>([]);
+
+  // react와 달리 RN에서는 onChangeText (react에서는 onChange )와 onPress (react에서는 onClick ) 이벤트를 사용한다
+  const handleGoalInput = (text: string) => {
+    setEnteredGoalText(text);
+  };
+
+  const handleAddGoal = () => {
+    setGoals([...goals, enteredGoalText]);
+  };
+
   return (
     <SafeAreaView style={styles.safeContainer}>
       <View style={styles.container}>
         <View style={styles.inputContainer}>
-          <TextInput style={styles.textInput} placeholder="목표를 입력하세요" />
-          <Button title="목표 추가!" />
+          <TextInput
+            style={styles.textInput}
+            placeholder="목표를 입력하세요"
+            onChangeText={handleGoalInput}
+          />
+          <Button title="목표 추가!" onPress={handleAddGoal} />
         </View>
         <View style={styles.goalsContainer}>
-          <Text>Golas</Text>
+          {goals.map((goal, index) => (
+            <Text>{goal}</Text>
+          ))}
         </View>
       </View>
     </SafeAreaView>
