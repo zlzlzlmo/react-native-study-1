@@ -9,6 +9,7 @@ import {
   Platform,
   StatusBar,
   ScrollView,
+  FlatList,
 } from "react-native";
 
 // SafeAreaView는 아이폰에서 Status Bar 크기 만큼 적용시켜서 padding top같은 역할을 해주는 api
@@ -22,16 +23,29 @@ import {
 // 브라우저와 달리 RN에서는 height가 넘어갈시 scroll이 안되기 때문에 ScrollView 컴포넌트를 사용해야한다.
 // ScrollView는 부모 컴포넌트 스타일 기준에서 스크롤 기능이 적용이 되기 때문에 스타일을 적용한 View로 ScrollView를 감싸야한다.
 
+// ScrollView를 사용했을때 발생할 수 있는 문제점 중 하나가 만약 렌더링할 아이템이 수백 수천개면 성능저하가 일어나게된다.
+// 그럴때 FlatList를 사용하면 된다. FlatList는 lazy load 역할을 하게되기때문에 한번에 모든 돔을 렌더링하지 않는다
+// FlatList는 data, renderItem prop를 통해 하위 컴포넌트들을 렌더링할 수 있다.
+// 또한 data안에 기본적으로 key 프로퍼티를 유니크 값으로 설정하게 되며 만약 key 프로퍼티가 아닌 다른 네임 프로퍼티를 유니크한 아이템으로 설정하고 싶으면 keyExtractor 를 사용하여 원하는 유니크 프로퍼티를 리턴해준다.
+
+interface IGoal {
+  text: string;
+  id: string;
+}
+
 export default function App() {
   const [enteredGoalText, setEnteredGoalText] = useState<string>("");
-  const [goals, setGoals] = useState<string[]>([]);
+  const [goals, setGoals] = useState<IGoal[]>([]);
 
   const handleGoalInput = (text: string) => {
     setEnteredGoalText(text);
   };
 
   const handleAddGoal = () => {
-    setGoals([...goals, enteredGoalText]);
+    setGoals([
+      ...goals,
+      { text: enteredGoalText, id: Math.random().toString() },
+    ]);
   };
 
   return (
@@ -46,13 +60,24 @@ export default function App() {
           <Button title="목표 추가!" onPress={handleAddGoal} />
         </View>
         <View style={styles.goalsContainer}>
-          <ScrollView>
+          <FlatList
+            data={goals}
+            renderItem={(renderItem) => {
+              return (
+                <View style={styles.goalItem}>
+                  <Text style={styles.goalText}>{renderItem.item.text}</Text>
+                </View>
+              );
+            }}
+            keyExtractor={(item) => item.id}
+          />
+          {/* <ScrollView>
             {goals.map((goal, index) => (
               <View style={styles.goalItem} key={index}>
                 <Text style={styles.goalText}>{goal}</Text>
               </View>
             ))}
-          </ScrollView>
+          </ScrollView> */}
         </View>
       </View>
     </SafeAreaView>
