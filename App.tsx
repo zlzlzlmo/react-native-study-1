@@ -62,10 +62,11 @@ export default function App() {
         <View style={styles.goalsContainer}>
           {goals.length > 0 ? (
             <FlatList
+              testID="goal-list"
               data={goals}
               renderItem={(renderItem) => {
                 return (
-                  <View style={styles.goalItem}>
+                  <View style={styles.goalItem} testID="goal-item">
                     <Text style={styles.goalText}>{renderItem.item.text}</Text>
                   </View>
                 );
