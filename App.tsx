@@ -60,17 +60,22 @@ export default function App() {
           <Button title="목표 추가!" onPress={handleAddGoal} />
         </View>
         <View style={styles.goalsContainer}>
-          <FlatList
-            data={goals}
-            renderItem={(renderItem) => {
-              return (
-                <View style={styles.goalItem}>
-                  <Text style={styles.goalText}>{renderItem.item.text}</Text>
-                </View>
-              );
-            }}
-            keyExtractor={(item) => item.id}
-          />
+          {goals.length > 0 ? (
+            <FlatList
+              data={goals}
+              renderItem={(renderItem) => {
+                return (
+                  <View style={styles.goalItem}>
+                    <Text style={styles.goalText}>{renderItem.item.text}</Text>
+                  </View>
+                );
+              }}
+              keyExtractor={(item) => item.id}
+            />
+          ) : (
+            <Text>목표를 먼저 입력하세요</Text>
+          )}
+
           {/* <ScrollView>
             {goals.map((goal, index) => (
               <View style={styles.goalItem} key={index}>
