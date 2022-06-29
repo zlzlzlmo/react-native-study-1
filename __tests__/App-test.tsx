@@ -36,10 +36,26 @@ describe("<App/>", () => {
       const goalItems = screen.getAllByTestId("goal-item");
       expect(goalItems).toHaveLength(2);
     });
+
+    test("delete a goal from list container when to click an item", () => {
+      render(<App />);
+      addGoal("좋은 개발자 되기");
+      const goalItems = screen.getAllByTestId("goal-item");
+
+      expect(goalItems).toHaveLength(1);
+      clickDelete();
+
+      const againGoalItems = screen.queryAllByTestId("goal-item");
+      expect(againGoalItems).toHaveLength(0);
+    });
   });
 });
 
 function addGoal(goal: string) {
   fireEvent.changeText(screen.getByPlaceholderText("목표를 입력하세요"), goal);
   fireEvent.press(screen.getByRole("button"));
+}
+
+function clickDelete() {
+  fireEvent.press(screen.getByTestId("goal-item"));
 }
