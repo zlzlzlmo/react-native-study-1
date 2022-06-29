@@ -1,15 +1,22 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Pressable } from "react-native";
 
 interface GoalItemProps {
+  id: string;
   text: string;
+  onDeleteGoal: (goalId: string) => void;
 }
 
-const GoalItem = ({ text }: GoalItemProps) => {
+// * 터치와 같은 interaction을 감지하기 위해 pressable api를 사용한다
+// * pressable 은 최근 api 로 touchableOpacity와 같은 api를 대체하여 사용이 가능하다.
+
+const GoalItem = ({ onDeleteGoal, id, text }: GoalItemProps) => {
   return (
-    <View style={styles.goalItem} testID="goal-item">
-      <Text style={styles.goalText}>{text}</Text>
-    </View>
+    <Pressable onPress={onDeleteGoal.bind(this, id)}>
+      <View style={styles.goalItem} testID="goal-item">
+        <Text style={styles.goalText}>{text}</Text>
+      </View>
+    </Pressable>
   );
 };
 

@@ -42,6 +42,11 @@ export default function App() {
     ]);
   };
 
+  const onDeleteGoal = (goalId: string) => {
+    const newList = goals.filter(({ id }) => id !== goalId);
+    setGoals(newList);
+  };
+
   return (
     <SafeAreaView style={styles.safeContainer}>
       <View style={styles.container}>
@@ -52,7 +57,13 @@ export default function App() {
               testID="goal-list"
               data={goals}
               renderItem={(renderItem) => {
-                return <GoalItem text={renderItem.item.text} />;
+                return (
+                  <GoalItem
+                    id={renderItem.item.id}
+                    text={renderItem.item.text}
+                    onDeleteGoal={onDeleteGoal}
+                  />
+                );
               }}
               keyExtractor={(item) => item.id}
               alwaysBounceVertical={false}
