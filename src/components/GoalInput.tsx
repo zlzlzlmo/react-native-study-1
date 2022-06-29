@@ -27,6 +27,11 @@ const GoalInput = ({
   // * RN에서는 기본적으로 Modal api가 제공된다
   // * visible과 animation 속성을 줘 컨트롤이 가능하다.
 
+  const handleCancel = () => {
+    setEnteredGoalText("");
+    onCloseModal();
+  };
+
   return (
     <Modal visible={isModalVisible} animationType="fade">
       <View style={styles.inputContainer} accessibilityHint="goal-modal">
@@ -41,7 +46,7 @@ const GoalInput = ({
             <Button title="목표 추가!" onPress={addGoalHandler} />
           </View>
           <View style={styles.button}>
-            <Button title="취소" onPress={onCloseModal} />
+            <Button title="취소" onPress={handleCancel} />
           </View>
         </View>
       </View>

@@ -35,7 +35,6 @@ describe("<App/>", () => {
 
   describe("Handle Event at Modal", () => {
     beforeEach(() => {
-      console.log("Render");
       render(<App />);
       const addGoalButton = screen.getByText("목표 입력하기!");
       fireEvent.press(addGoalButton);
@@ -45,13 +44,14 @@ describe("<App/>", () => {
       addGoal("좋은 개발자 되기");
       const goalItems = screen.getAllByTestId("goal-item");
       expect(goalItems).toHaveLength(1);
-      console.log("test1 끝");
     });
+
     test("close modal after adding a goal", () => {
       addGoal("영어 공부 열심히 하기");
       const goalModal = screen.queryByA11yHint("goal-modal");
       expect(goalModal).toBeNull();
     });
+
     test("delete a goal when to click an item", () => {
       addGoal("영어 공부 열심히 하기");
       deleteGoal();
