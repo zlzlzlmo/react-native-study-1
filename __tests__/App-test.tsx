@@ -19,7 +19,7 @@ describe("<App/>", () => {
     });
   });
 
-  describe("event", () => {
+  describe("Handle Event", () => {
     test("have one item from entering one goal", () => {
       render(<App />);
       addGoal("좋은 개발자 되기");
@@ -41,10 +41,9 @@ describe("<App/>", () => {
       render(<App />);
       addGoal("좋은 개발자 되기");
       const goalItems = screen.getAllByTestId("goal-item");
-
       expect(goalItems).toHaveLength(1);
-      clickDelete();
 
+      clickItemForDelete();
       const againGoalItems = screen.queryAllByTestId("goal-item");
       expect(againGoalItems).toHaveLength(0);
     });
@@ -56,6 +55,6 @@ function addGoal(goal: string) {
   fireEvent.press(screen.getByRole("button"));
 }
 
-function clickDelete() {
+function clickItemForDelete() {
   fireEvent.press(screen.getByTestId("goal-item"));
 }
