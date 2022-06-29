@@ -7,6 +7,7 @@ import {
   Platform,
   StatusBar,
   FlatList,
+  Button,
 } from "react-native";
 import GoalInput from "./src/components/GoalInput";
 import GoalItem from "./src/components/GoalItem";
@@ -34,6 +35,7 @@ interface IGoal {
 
 export default function App() {
   const [goals, setGoals] = useState<IGoal[]>([]);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   const onAddGoal = (enteredGoalText: string) => {
     setGoals([
@@ -47,10 +49,24 @@ export default function App() {
     setGoals(newList);
   };
 
+  const onCloseModal = () => {
+    setIsModalVisible(false);
+  };
+
   return (
     <SafeAreaView style={styles.safeContainer}>
       <View style={styles.container}>
-        <GoalInput onAddGoal={onAddGoal} />
+        <View>
+          <Button
+            title="목표 입력하기!"
+            onPress={() => setIsModalVisible(true)}
+          />
+        </View>
+        <GoalInput
+          onAddGoal={onAddGoal}
+          isModalVisible={isModalVisible}
+          onCloseModal={onCloseModal}
+        />
         <View style={styles.goalsContainer}>
           {goals.length > 0 ? (
             <FlatList
@@ -69,7 +85,7 @@ export default function App() {
               alwaysBounceVertical={false}
             />
           ) : (
-            <Text>목표를 먼저 입력하세요</Text>
+            <Text style={{ textAlign: "center" }}>목표를 먼저 입력하세요</Text>
           )}
 
           {/* <ScrollView>

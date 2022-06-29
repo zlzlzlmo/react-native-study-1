@@ -8,6 +8,8 @@ interface GoalItemProps {
 }
 
 // * 터치와 같은 interaction을 감지하기 위해 pressable api를 사용한다
+// ! Button 컴포넌트에서는 기본적으로 press 기능이 있기때문에 사용안해도 된다. 하지만 View같은 것은 그런 기능이 없기때문에 감싸줘야한다.
+
 // * pressable 은 최근 api 로 touchableOpacity와 같은 api를 대체하여 사용이 가능하다.
 // * style 속성을 사용하여 클릭된 상태일때 효과를 줄 수 있다!
 // * 안드로이드 전용 속성으로 android_ripple이 있으며, 아이폰은 안되기 때문에 style 속성을 이용해서 아이폰도 같이 줄 수 있다.
