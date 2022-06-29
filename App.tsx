@@ -36,14 +36,9 @@ interface IGoal {
 }
 
 export default function App() {
-  const [enteredGoalText, setEnteredGoalText] = useState<string>("");
   const [goals, setGoals] = useState<IGoal[]>([]);
 
-  const handleGoalInput = (text: string) => {
-    setEnteredGoalText(text);
-  };
-
-  const handleAddGoal = () => {
+  const onAddGoal = (enteredGoalText: string) => {
     setGoals([
       ...goals,
       { text: enteredGoalText, id: Math.random().toString() },
@@ -53,10 +48,7 @@ export default function App() {
   return (
     <SafeAreaView style={styles.safeContainer}>
       <View style={styles.container}>
-        <GoalInput
-          handleAddGoal={handleAddGoal}
-          handleGoalInput={handleGoalInput}
-        />
+        <GoalInput onAddGoal={onAddGoal} />
         <View style={styles.goalsContainer}>
           {goals.length > 0 ? (
             <FlatList

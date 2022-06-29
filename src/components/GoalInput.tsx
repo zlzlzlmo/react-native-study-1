@@ -1,20 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, TextInput, Button } from "react-native";
 
 interface GoalInputProps {
-  handleGoalInput: (text: string) => void;
-  handleAddGoal: () => void;
+  onAddGoal: (enteredGoalText: string) => void;
 }
 
-const GoalInput = ({ handleGoalInput, handleAddGoal }: GoalInputProps) => {
+const GoalInput = ({ onAddGoal }: GoalInputProps) => {
+  const [enteredGoalText, setEnteredGoalText] = useState<string>("");
+
+  const goalInputHandler = (text: string) => {
+    setEnteredGoalText(text);
+  };
+
+  const addGoalHandler = () => {
+    onAddGoal(enteredGoalText);
+  };
+
   return (
     <View style={styles.inputContainer}>
       <TextInput
         style={styles.textInput}
         placeholder="목표를 입력하세요"
-        onChangeText={handleGoalInput}
+        onChangeText={goalInputHandler}
       />
-      <Button title="목표 추가!" onPress={handleAddGoal} />
+      <Button title="목표 추가!" onPress={addGoalHandler} />
     </View>
   );
 };
