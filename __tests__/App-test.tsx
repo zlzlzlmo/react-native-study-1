@@ -19,7 +19,7 @@ describe("<App/>", () => {
     });
   });
 
-  describe("Handle Event", () => {
+  describe("Show Modal", () => {
     test("show visbile modal when to click button", () => {
       render(<App />);
       const goalModal = screen.queryByA11yHint("goal-modal");
@@ -31,42 +31,42 @@ describe("<App/>", () => {
       const againGoalModal = screen.queryByA11yHint("goal-modal");
       expect(againGoalModal).not.toBeNull();
     });
+  });
 
-    // test("have one item from entering one goal", () => {
-    //   render(<App />);
-    //   addGoal("좋은 개발자 되기");
-    //   const goalItems = screen.getAllByTestId("goal-item");
-    //   expect(goalItems).toHaveLength(1);
-    // });
+  describe("Handle Event at Modal", () => {
+    beforeEach(() => {
+      console.log("Render");
+      render(<App />);
+      const addGoalButton = screen.getByText("목표 입력하기!");
+      fireEvent.press(addGoalButton);
+    });
 
-    // test("have two item from entering two goal", () => {
-    //   render(<App />);
+    test("have one item from entering one goal", () => {
+      addGoal("좋은 개발자 되기");
+      const goalItems = screen.getAllByTestId("goal-item");
+      expect(goalItems).toHaveLength(1);
+      console.log("test1 끝");
+    });
+    test("close modal after adding a goal", () => {
+      addGoal("영어 공부 열심히 하기");
+      const goalModal = screen.queryByA11yHint("goal-modal");
+      expect(goalModal).toBeNull();
+    });
+    test("delete a goal when to click an item", () => {
+      addGoal("영어 공부 열심히 하기");
+      deleteGoal();
 
-    //   addGoal("좋은 개발자 되기");
-    //   addGoal("영어 공부 열심히 하기");
-
-    //   const goalItems = screen.getAllByTestId("goal-item");
-    //   expect(goalItems).toHaveLength(2);
-    // });
-
-    // test("delete a goal from list container when to click an item", () => {
-    //   render(<App />);
-    //   addGoal("좋은 개발자 되기");
-    //   const goalItems = screen.getAllByTestId("goal-item");
-    //   expect(goalItems).toHaveLength(1);
-
-    //   clickItemForDelete();
-    //   const againGoalItems = screen.queryAllByTestId("goal-item");
-    //   expect(againGoalItems).toHaveLength(0);
-    // });
+      const items = screen.queryAllByTestId("goal-item");
+      expect(items).toHaveLength(0);
+    });
   });
 });
 
 function addGoal(goal: string) {
   fireEvent.changeText(screen.getByPlaceholderText("목표를 입력하세요"), goal);
-  fireEvent.press(screen.getByRole("button"));
+  fireEvent.press(screen.getByText("목표 추가!"));
 }
 
-function clickItemForDelete() {
+function deleteGoal() {
   fireEvent.press(screen.getByTestId("goal-item"));
 }
