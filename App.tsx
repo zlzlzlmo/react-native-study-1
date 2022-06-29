@@ -3,12 +3,9 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput,
-  Button,
   SafeAreaView,
   Platform,
   StatusBar,
-  ScrollView,
   FlatList,
 } from "react-native";
 import GoalInput from "./src/components/GoalInput";

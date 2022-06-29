@@ -14,6 +14,7 @@ const GoalInput = ({ onAddGoal }: GoalInputProps) => {
 
   const addGoalHandler = () => {
     onAddGoal(enteredGoalText);
+    setEnteredGoalText("");
   };
 
   return (
@@ -22,6 +23,7 @@ const GoalInput = ({ onAddGoal }: GoalInputProps) => {
         style={styles.textInput}
         placeholder="목표를 입력하세요"
         onChangeText={goalInputHandler}
+        value={enteredGoalText}
       />
       <Button title="목표 추가!" onPress={addGoalHandler} />
     </View>
