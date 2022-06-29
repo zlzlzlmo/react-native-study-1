@@ -29,7 +29,7 @@ const GoalInput = ({
 
   return (
     <Modal visible={isModalVisible} animationType="fade">
-      <View style={styles.inputContainer}>
+      <View style={styles.inputContainer} accessibilityHint="goal-modal">
         <TextInput
           style={styles.textInput}
           placeholder="목표를 입력하세요"
